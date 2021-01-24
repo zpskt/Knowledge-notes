@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>JETSON TX2刷机（Jetpack 4.4版本）及镜像备份与恢复的巨详细教程 - 灰信网（软件开发博客聚合）</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="keywords" content="JETSON TX2刷机（Jetpack 4.4版本）及镜像备份与恢复的巨详细教程，灰信网，软件开发博客聚合，程序员专属的优秀博客文章阅读平台">
+<meta name="description" content="JETSON TX2刷机（Jetpack 4.4版本）及镜像备份与恢复的巨详细教程，灰信网，软件开发博客聚合，程序员专属的优秀博客文章阅读平台。">
+<!--[if lte IE 8]><script src="/assets/js/ie/html5shiv.js"></script><![endif]-->
+<link rel="stylesheet" href="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/main.css">
+<!--[if lte IE 9]><link rel="stylesheet" href="/assets/css/ie9.css" /><![endif]-->
+<!--[if lte IE 8]><link rel="stylesheet" href="/assets/css/ie8.css" /><![endif]-->
+<link rel="stylesheet" href="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/markdown.css">
+<link rel="stylesheet" href="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/viewer.css">
+<script> window._izq = window._izq || []; window._izq.push(["init" ]); </script> <script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/722ef5b38cb2729a7d0a8070c8840fa874461ab6.js"></script><script id="izootoSdk" src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/izooto.js"></script>
+<style type="text/css">pre{position: relative}pre:hover .hljs-button{display: block}.hljs-button{display: none;position: absolute;right: 4px;top: 4px;font-size: 12px;color: #4d4d4d;background-color: white;padding: 2px 8px;margin: 8px;border-radius: 4px;cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);}.hljs-button:after{content: attr(data-title)}</style><style type="text/css">.hljs-ln{border-collapse:collapse}            .hljs-ln td{padding:0}            .hljs-ln-n{text-align: right;padding-right: 8px;}            .hljs-ln-n:before{content:attr(data-line-number)}</style></head>
+<body class="">
+
+<div id="wrapper">
+
+<header id="header">
+<nav class="links">
+<ul>
+<li><a href="https://www.freesion.com/">首页</a></li>
+<li><a href="mailto:freesion@gmx.com">联系我们</a></li>
+</ul>
+</nav>
+<nav class="main">
+<ul>
+<li class="search">
+<a class="fa-search" href="javascript:void(0)" onclick="mysubmit();">搜索</a>
+<form id="searchForm" name="searchForm" method="post" action="/search" onsubmit="return validate();">
+<input type="text" name="s" id="s" placeholder="搜索">
+</form>
+</li>
+</ul>
+</nav>
+</header>
+
+<div id="main">
+<h2 style="font-size:25px;letter-spacing: 0px;">
+<span>JETSON TX2刷机（Jetpack 4.4版本）及镜像备份与恢复的巨详细教程</span>
+</h2>
+<p style="margin-bottom:5px;">标签：&nbsp;<a href="https://www.freesion.com/tag/linux/" title="linux">linux</a>&nbsp;&nbsp;<a href="https://www.freesion.com/tag/jetson+tx2/" title="jetson tx2">jetson tx2</a>&nbsp;&nbsp;<a href="https://www.freesion.com/tag/ubuntu/" title="ubuntu">ubuntu</a>&nbsp;&nbsp;<a href="https://www.freesion.com/tag/ubuntu/" title="ubuntu">ubuntu</a>&nbsp;&nbsp;<a href="https://www.freesion.com/tag/linux/" title="linux">linux</a>&nbsp;&nbsp;<a href="https://www.freesion.com/tag/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" title="深度学习">深度学习</a></p><div style="clear:both;"></div>
+<div style="padding:5px 5px 5px 5px;word-wrap: break-word; word-break: normal;max-width: 850px;" id="article_content">
+<div id="native-ads">
+</div>
+<div id="content_views" class="markdown_views prism-atom-one-dark">
+<h1><a id="JETSON_TX2Jetpack_44_1" target="_blank" rel="nofollow,noindex"></a>JETSON TX2镜像备份与恢复以及刷机的巨详细教程（Jetpack 4.4版本）</h1>
+<p></p>
+<div class="toc">
+<h3> </h3>
+<ul><li><a href="#JETSON_TX2Jetpack_44_1" target="" rel="nofollow,noindex">JETSON TX2镜像备份与恢复以及刷机的巨详细教程（Jetpack 4.4版本）</a></li><li><a href="#_3" target="" rel="nofollow,noindex">刷机前的絮絮叨叨和准备工作</a></li><li><ul><li><a href="#_13" target="" rel="nofollow,noindex">开始刷机</a></li><li><ul><li><a href="#_103" target="" rel="nofollow,noindex">备份及恢复</a></li></ul>
+</li></ul>
+</li></ul>
+</div>
+<p></p>
+<h1><a id="_3" target="_blank" rel="nofollow,noindex"></a>刷机前的絮絮叨叨和准备工作</h1>
+<p>看了各种论坛上的教程，说jetson tx2出厂自带的是ubuntu16的系统，可我买到的是ubuntu18的。。作死开始学刷机。<br> 搞了四五天，终于完成了，真的要吐了。<br>
+ 首先建议各位不用轻信网上的不着调的教程，我第一次刷机刷的是Jetpack 
+3.3版本，也就是刷进去开机是ubuntu16.04的系统，但我需要的是ubuntu18.04，于是想着直接升级系统比刷机稳妥一点，跟着网上的用
+命令行升级系统的教程来，升级完了打不开图形页面，要么一直卡在started user manager for uid 
+124这里要么直接进tty模式，试过重新安装桌面也试过切换桌面打开方式，统统不行（天选之子就是我了），遂放弃了这条路。触发了系统弹窗提示更新的选
+项，又开始了更新，这回也没成功，一样的报错。于是我走上了刷机的这条路。</p>
+<p>**** <strong>刷机准备</strong><br> 1、ubuntu主机一台 （内存记得大于搞大点，我分配了120G）。我用的是ubuntu16.04+jetpack4.4<br> 2、显示器一台+HDMI转接线1根（jetson tx2要接显示屏+原装刷机线一根+鼠标键盘<br> 3、下载安装Jetpack4.4</p>
+<h2><a id="_13" target="_blank" rel="nofollow,noindex"></a>开始刷机</h2>
+<p>1、在ubuntu中打开官网https://developer.nvidia.com/embedded/jetpack下载Jetpack4.4<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/8028ab18900985f48856579b56b4da44.png" alt="在这里插入图片描述"><br> 2、选择下载保存，手动安装：<br> 打开文件所在目录，使用命令安装，安装完了后在终端输入sdkmanager就能打开了</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)">sudo apt install <span class="token punctuation">.</span><span class="token operator">/</span>sdkmanager_1<span class="token punctuation">.</span><span class="token number">3.1</span><span class="token operator">-</span><span class="token number">7110</span>_amd64<span class="token punctuation">.</span>deb
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+<p><img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/3e4251ae509ec49f1f3d939a0be1a299.png" alt="在这里插入图片描述"><br> 3、关于换源下载，其实我觉得换不换源都差不多，对我来说结局都是失败失败失败失败失败成功，所以我没有换源直接就上了。要换源的整一波：</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)">#备份文件
+sudo cp <span class="token operator">/</span>etc<span class="token operator">/</span>apt<span class="token operator">/</span>sources<span class="token punctuation">.</span>list <span class="token operator">/</span>etc<span class="token operator">/</span>apt<span class="token operator">/</span>sources_init<span class="token punctuation">.</span>list
+sudo  chmod  <span class="token operator">+</span>w  <span class="token operator">/</span>etc<span class="token operator">/</span>apt<span class="token operator">/</span>sources<span class="token punctuation">.</span>list
+sudo gedit <span class="token operator">/</span>etc<span class="token operator">/</span>apt<span class="token operator">/</span>sources<span class="token punctuation">.</span>list
+# 阿里源
+deb http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial main restricted universe multiverse
+deb http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>security main restricted universe multiverse
+deb http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>updates main restricted universe multiverse
+deb http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>proposed main restricted universe multiverse
+deb http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>backports main restricted universe multiverse
+deb<span class="token operator">-</span>src http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial main restricted universe multiverse
+deb<span class="token operator">-</span>src http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>security main restricted universe multiverse
+deb<span class="token operator">-</span>src http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>updates main restricted universe multiverse
+deb<span class="token operator">-</span>src http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>proposed main restricted universe multiverse
+deb<span class="token operator">-</span>src http<span class="token punctuation">:</span><span class="token operator">/</span><span class="token operator">/</span>mirrors<span class="token punctuation">.</span>aliyun<span class="token punctuation">.</span>com<span class="token operator">/</span>ubuntu<span class="token operator">/</span> xenial<span class="token operator">-</span>backports main restricted universe multiverse
+#保存并更新
+sudo apt update
+#修复损坏的软件包，尝试卸载出错的包，重新安装正确版本的
+sudo apt<span class="token operator">-</span><span class="token keyword">get</span> <span class="token operator">-</span>f install
+sudo apt upgrade
+
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li><li style="color: rgb(153, 153, 153);">9</li><li style="color: rgb(153, 153, 153);">10</li><li style="color: rgb(153, 153, 153);">11</li><li style="color: rgb(153, 153, 153);">12</li><li style="color: rgb(153, 153, 153);">13</li><li style="color: rgb(153, 153, 153);">14</li><li style="color: rgb(153, 153, 153);">15</li><li style="color: rgb(153, 153, 153);">16</li><li style="color: rgb(153, 153, 153);">17</li><li style="color: rgb(153, 153, 153);">18</li><li style="color: rgb(153, 153, 153);">19</li><li style="color: rgb(153, 153, 153);">20</li><li style="color: rgb(153, 153, 153);">21</li></ul></pre>
+<p>4、打开sdkmanager，记得登录方式要选择开发者这里，</p>
+<p><img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/df77ce7490599ca62b377ff617cc6adb.png" alt="在这里插入图片描述"><br> 如果出现这个令人崩溃的页面，莫慌，接下来你还会看到它的。毕竟刷机的过程就是不断retry（笑）<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/651515898c8f37fcc23b4903c1b3d09e.png" alt="在这里插入图片描述"><br> 如果多次retry还是不行的话，建议关掉软件重新打开，实在不行就重启虚拟机= = （检查虚拟机的网络状态：桥接模式/但我用的NAT模式也能成功）<br> 之前用jetpack 4.2的包一直卡在第一步，关于linux选包那里[第三个框]一直是灰色的，无法进行下一步操作，4.4真香！<img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/a6fb8709cc370fb6c3f9991e764e5e23.png" alt="在这里插入图片描述"></p>
+<p>好家伙，终于打开了step 2的页面了！一口吃不成大胖子，我选择了先下载后安装（因为之前二者是同时进行的，每次都失败，我累了这三个字已经说腻了）<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/d2361653cedc840fddef3406f7ce7cbe.png" alt="在这里插入图片描述"><br> 分享喜悦:当我看到没有error的时候我都想拉条横幅再放串鞭炮祝贺了，太难得了满屏绿条，接下来就是安装的事情了！<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/760c350d06bb9b053d3bccc99d445022.png" alt="在这里插入图片描述"><br> 分享常态：不怕不怕再retry<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/530815ce861fbfe8432194f4dbfd5ea5.png" alt="在这里插入图片描述"><br> 放一首好运来，对着电脑再拜一拜，trytrytry!!就搞完了！！！！<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/bc23217471915955774d2be0b9ce31be.png" alt="在这里插入图片描述"><br> 还有个交互的页面了，就是有个输入ip地址的弹窗，可以选择自动刷机或者手动刷机，建议选手动稳妥。这一步可以先跳过，等安装完再回来搞。如果不跳过的话，需要将jetson tx2进入RECOVERY模式，方法为:</p>
+<p>1：给jetson tx2关机断电，拔掉电源适配器。</p>
+<p>2：重新接上电源。</p>
+<p>3：按一下power键开机</p>
+<p>4：按下RECOVERY FORCE并保持</p>
+<p>5：接着按下一下RESET键</p>
+<p>6：保持按住RECOVERY FORCE键两秒以上并松开<br> 查看是否接上：终端输入lsusb</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)">gym@gym<span class="token punctuation">:</span><span class="token operator">~</span>$ lsusb
+Bus <span class="token number">001</span> Device <span class="token number">007</span><span class="token punctuation">:</span> <span class="token constant">ID</span> <span class="token number">0955</span><span class="token punctuation">:</span><span class="token number">7</span>c18 NVidia Corp<span class="token punctuation">.</span> 
+Bus <span class="token number">001</span> Device <span class="token number">005</span><span class="token punctuation">:</span> <span class="token constant">ID</span> <span class="token number">1058</span><span class="token punctuation">:</span><span class="token number">2626</span> Western Digital Technologies<span class="token punctuation">,</span> Inc<span class="token punctuation">.</span> 
+Bus <span class="token number">001</span> Device <span class="token number">001</span><span class="token punctuation">:</span> <span class="token constant">ID</span> <span class="token number">1</span>d6b<span class="token punctuation">:</span><span class="token number">0002</span> Linux Foundation <span class="token number">2.0</span> root hub
+Bus <span class="token number">002</span> Device <span class="token number">003</span><span class="token punctuation">:</span> <span class="token constant">ID</span> <span class="token number">0e0</span>f<span class="token punctuation">:</span><span class="token number">0002</span> VMware<span class="token punctuation">,</span> Inc<span class="token punctuation">.</span> Virtual <span class="token constant">USB</span> Hub
+Bus <span class="token number">002</span> Device <span class="token number">002</span><span class="token punctuation">:</span> <span class="token constant">ID</span> <span class="token number">0e0</span>f<span class="token punctuation">:</span><span class="token number">0003</span> VMware<span class="token punctuation">,</span> Inc<span class="token punctuation">.</span> Virtual Mouse
+Bus <span class="token number">002</span> Device <span class="token number">001</span><span class="token punctuation">:</span> <span class="token constant">ID</span> <span class="token number">1</span>d6b<span class="token punctuation">:</span><span class="token number">0001</span> Linux Foundation <span class="token number">1.1</span> root hub
+
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li><li style="color: rgb(153, 153, 153);">7</li><li style="color: rgb(153, 153, 153);">8</li></ul></pre>
+<p><img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/0aaaa1d5ebb39b46547910ddb73ef157.png" alt="在这里插入图片描述"><br> 开始漫长又短暂的刷机工作~<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/ae4a27b65c23f1976e7b94267c6cf314.png" alt="在这里插入图片描述"><br> 完成刷机后你的jetson tx2的屏幕会亮起来，因为它在重启，可以在终端进行测试nvcc -V</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)">gym@gym<span class="token punctuation">:</span><span class="token operator">~</span>$ nvcc <span class="token operator">-</span><span class="token constant">V</span>
+nvcc<span class="token punctuation">:</span> <span class="token constant">NVIDIA</span> <span class="token punctuation">(</span><span class="token constant">R</span><span class="token punctuation">)</span> Cuda compiler driver
+<span class="token function">Copyright</span> <span class="token punctuation">(</span>c<span class="token punctuation">)</span> <span class="token number">2005</span><span class="token operator">-</span><span class="token number">2019</span> <span class="token constant">NVIDIA</span> Corporation
+Built on Wed_Oct_23_21<span class="token punctuation">:</span><span class="token number">14</span><span class="token punctuation">:</span><span class="token number">42</span>_PDT_2019
+Cuda compilation tools<span class="token punctuation">,</span> release <span class="token number">10.2</span><span class="token punctuation">,</span> <span class="token constant">V10</span><span class="token number">.2</span><span class="token number">.89</span>
+
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li><li style="color: rgb(153, 153, 153);">3</li><li style="color: rgb(153, 153, 153);">4</li><li style="color: rgb(153, 153, 153);">5</li><li style="color: rgb(153, 153, 153);">6</li></ul></pre>
+<p>这时就已经完成了刷机啦!祝你们成功呀！</p>
+<h3><a id="_103" target="_blank" rel="nofollow,noindex"></a>备份及恢复</h3>
+<p><strong>备份镜像：</strong><br> 我要开始备份了，因为我有两台jetson tx2，豪横!（bushiwode）<br>
+ 
+看了网上的教程，跟着做其实还阔以，但天选之子没有这么网上的例子那般顺利555555，首先我之前刷的是jetpack3.3版本的，我备份了个镜像之
+后，重新烧录就出现不断重启的现象，就是nvdia的绿眼睛之后又是绿眼睛，真的绝望了。现在拿4.4的版本备份康康：<br> 需要用到的关键文件：flash.sh<br> 1、进入flash.sh所在的目录，在此目录下打开终端<br> 2、连接jetson tx2 ，并进入recovery模式<br> 3、输入指令并开始备份：</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)"> sudo <span class="token punctuation">.</span><span class="token operator">/</span>flash<span class="token punctuation">.</span>sh <span class="token operator">-</span>r <span class="token operator">-</span>k <span class="token constant">APP</span> <span class="token operator">-</span><span class="token constant">G</span> my_backup<span class="token punctuation">.</span>img jetson<span class="token operator">-</span>tx2 mmcblk0p1  
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+<p>一般来说是100%能成的，会生成两个镜像文件，一个30G左右，一个5G左右。在/home/gym/nvidia/nvidia_sdk/JetPack_4.4_Linux_JETSON_TX2/Linux_for_Tegra这个目录下。<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/83ab755779a73703e62b06fb9015547a.png" alt="在这里插入图片描述"><br> <strong>镜像的恢复:</strong><br> 1、进入镜像文件所在的目录(建议先把镜像拷贝到硬盘上备份起来)</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)">cd <span class="token operator">/</span>home<span class="token operator">/</span>gym<span class="token operator">/</span>nvidia<span class="token operator">/</span>nvidia_sdk<span class="token operator">/</span>JetPack_4<span class="token punctuation">.</span><span class="token number">4</span>_Linux_JETSON_TX2<span class="token operator">/</span>Linux_for_Tegra
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li></ul></pre>
+<p>2、将镜像（有两个，一个是.raw后缀，一个是.img后缀的，哪个都行）拷贝到子目录bootloader下，并重命名为
+system.img，bootloader里面原来也有一个system.img文件，可以把它拖到桌面先存着，我没有用命令行，直接鼠标键盘操作的。<br> 3、镜像恢复：</p>
+<pre class="prettyprint"><code class="prism language-javascript has-numbering" onclick="mdcp.copyCode(event)">cd <span class="token punctuation">.</span><span class="token punctuation">.</span> #回到上一层目录<span class="token punctuation">:</span>也就是flash<span class="token punctuation">.</span>sh文件所在的目录中运行<span class="token punctuation">:</span>
+sudo <span class="token punctuation">.</span><span class="token operator">/</span>flash<span class="token punctuation">.</span>sh <span class="token operator">-</span>r  jetson<span class="token operator">-</span>tx2 mmcblk0p1
+<div class="hljs-button {2}" data-title="复制"></div></code><ul class="pre-numbering" style=""><li style="color: rgb(153, 153, 153);">1</li><li style="color: rgb(153, 153, 153);">2</li></ul></pre>
+<p>开始烧录:<br> <img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/e2421862809c2733d19064a2c9f5f309.png" alt="在这里插入图片描述"><br> 完成！</p>
+<p>参考教程:<br> 
+https://blog.csdn.net/ycy_dy/article/details/80493392?biz_id=102&amp;utm_term=jetson%20tx2%E5%A4%87%E4%BB%BD&amp;utm_medium=distribute.pc_search_result.none-task-blog-2<sub>all</sub>sobaiduweb~default-0-80493392&amp;spm=1018.2118.3001.4187</p>
+<p>https://blog.csdn.net/ycy_dy/article/details/80493392?biz_id=102&amp;utm_term=jetson%20tx2%E5%A4%87%E4%BB%BD&amp;utm_medium=distribute.pc_search_result.none-task-blog-2<sub>all</sub>sobaiduweb~default-0-80493392&amp;spm=1018.2118.3001.4187</p>
+</div></div>
+<div style="float:right;">
+<div class="article-copyright">
+<span class="creativecommons"> <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"> </a> <span>
+版权声明：本文为Feizhai2原创文章，遵循<a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener"> CC 4.0 BY-SA </a>版权协议，转载请附上原文出处链接和本声明。
+</span>
+<div class="article-source-link2222">
+本文链接：<a href="https://blog.csdn.net/Feizhai2/article/details/109068697">https://blog.csdn.net/Feizhai2/article/details/109068697</a>
+</div>
+</span>
+</div>
+</div>
+<div style="clear:both;"></div>
+</div>
+
+<section id="sidebar">
+
+<section id="intro">
+<a href="https://www.freesion.com/" class="logo"><img src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/logo.jpg" alt=""></a>
+<header>
+<h2>灰信网<span style="font-size:13px;letter-spacing: 1px;">（软件开发博客聚合）</span></h2>
+<p><a>程序员专属的优秀博客文章阅读平台</a></p>
+</header>
+</section>
+
+<section>
+<div class="mini-posts">
+
+<ul style="list-style: none;">
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/8602119802/" title="Jetson TX2 刷机教程（JetPack3.3版本）">Jetson TX2 刷机教程（JetPack3.3版本）</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/37011148319/" title="ROS学习01-NVIDIA JETSON TX2 使用Jetpack4.4刷机指南">ROS学习01-NVIDIA JETSON TX2 使用Jetpack4.4刷机指南</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/77961215864/" title="英伟达Jetson TX2 套件刷机备忘---jetpack4.4 + deepstream5.0">英伟达Jetson TX2 套件刷机备忘---jetpack4.4 + deepstream5.0</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/54381042276/" title="Jetson tx2  jetpack 4.3刷机全过程爬坑详细记录">Jetson tx2 jetpack 4.3刷机全过程爬坑详细记录</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/2422711925/" title="Jetson TX2刷机Jetpack4.2(亲测成功版)">Jetson TX2刷机Jetpack4.2(亲测成功版)</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/376472950/" title="Jetson TX2使用Jetpack 3.3刷机，问题记录与整理">Jetson TX2使用Jetpack 3.3刷机，问题记录与整理</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/2349861378/" title="Jetson TX2刷机（JetPack3.3）">Jetson TX2刷机（JetPack3.3）</a></h3>
+</header>
+</article>
+<article class="mini-post">
+<header>
+<h3 style="font-weight: normal;"><a href="https://www.freesion.com/article/977014633/" title="Jetson TX2 安装JetPack3.3教程">Jetson TX2 安装JetPack3.3教程</a></h3>
+</header>
+</article>
+</ul>
+</div>
+</section>
+
+<section id="footer">
+<p class="copyright">Copyright © 2010-2021 - All Rights Reserved - <a href="https://www.freesion.com/">www.freesion.com</a></p>
+</section>
+</section>
+</div>
+
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/jquery.js"></script>
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/skel.js"></script>
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/util.js"></script>
+<!--[if lte IE 8]><script src="/assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/main.js"></script>
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/hljs_new.js" type="text/javascript"></script>
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/md.js" type="text/javascript"></script>
+<script>
+		if($('div.markdown_views pre.prettyprint code.hljs').length > 0 ){
+				$('div.markdown_views')[0].className = 'markdown_views';
+		}
+</script>
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/viewer.js"></script>
+<script>
+var viewer = new Viewer(document.getElementById('article_content'));
+</script>
+<script src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/freesion.js"></script><script type="text/javascript" src="JETSON%20TX2%E5%88%B7%E6%9C%BA%EF%BC%88Jetpack%204.4%E7%89%88%E6%9C%AC%EF%BC%89%E5%8F%8A%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D%E7%9A%84%E5%B7%A8%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%20-%20%E7%81%B0%E4%BF%A1%E7%BD%91%EF%BC%88%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%8D%9A%E5%AE%A2%E8%81%9A%E5%90%88%EF%BC%89_files/20650105.js"></script>
+
+
+
+</body></html>

@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <link rel="canonical" href="https://blog.51cto.com/9552815/2123352">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="applicable-device" content="pc">
+    <link type="favicon" rel="shortcut icon" href="https://blog.51cto.com/favicon.ico">
+        <title>ubuntu18.04安装xfce+vnc-琪·迹-51CTO博客</title>
+    <meta name="keywords" content="ubuntu18.04,xfce,vnc">
+<meta name="description" content="ubuntu18.04安装xfce+vnc主要参考：ubuntu16.04安装VNC+xfce的方法我这里自己做个笔记他写的很好，我很快就安装成功了。安装xfcesudoapt-getinstallxfce4安装VNCServersudoapt-getinstallvnc4server设置密码并运行vncservervncserver配置xstartup文件修改xstartup文件内容，针对Xfc">    <link href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/header.css" rel="stylesheet"><link href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/other.css" rel="stylesheet"><link href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/right.css" rel="stylesheet"><link href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/blog_details.css" rel="stylesheet"><link href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/highlight.css" rel="stylesheet">
+    <script type="text/javascript" async="" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/vds.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/push.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/hm.js"></script><script>
+        var HOME_URL = 'https://home.51cto.com/';
+    </script>
+    <script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/jquery_002.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/cookie.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/interaction_iframe.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/login.js"></script><link href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/iframe.css" rel="stylesheet"><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/common.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/mbox.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/follow.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/vip.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/window.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/share.js"></script><link rel="stylesheet" href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/share_style0_16.css"><style></style></head>
+<body>
+<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/share_default.jpg" style="width:0; height:0; position:absolute;" border="0">
+<style type="text/css">
+	.service-btn{
+		width: 53px;
+height: 36px;
+color: #1ac6fe;
+line-height: 16px;
+padding-top: 50px;
+		display: inline-block;
+		background: url(https://s4.51cto.com/images/blog/201811/02/463350acf4c693cfb3dc248bc8a2a0eb.png) no-repeat center;
+	}
+	.service-btn:hover{
+		background: url(https://s4.51cto.com/images/blog/201811/02/2d5fa2ff4eb9ef66847aff20ba4c8bae.png) no-repeat center;
+height: 36px;
+color: #fff;
+line-height: 16px;
+padding-top: 50px;
+	}
+    .special-column .column-1 .column-box .center a.h2{font-size:18px;}
+    .special-column .column-1 .column-box .center h5 span{font-size:14px;}
+    .Header .Navigates.fr li.login {
+      margin-right: 0;
+      padding-right: 0;
+      background: none;
+    }
+</style>
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+<div class="Header">
+  <div class="Page ">
+    <span class="Logo"><a href="https://blog.51cto.com/">Logo</a></span>
+    <ul class="Navigates fl">
+      <li><a href="https://blog.51cto.com/">首页</a></li>
+      <li><a href="https://blog.51cto.com/original">文章</a></li>
+      <li><a href="https://blog.51cto.com/blog/follow">关注</a></li>
+      <li class="">
+        <a class="column-stress" href="https://blog.51cto.com/cloumn/index" target="_blank">订阅专栏</a>
+      </li>
+        <li>
+            <a href="http://aix.51cto.com/activity/index.html?blog" target="_blank">大咖来了</a>
+        </li>
+                    
+                  </ul>
+    <ul class="Navigates Navigates-right fr">
+      <li class="more maps">
+        <a href="javascript:void(0);">网站导航</a>
+        <div>
+            <a href="https://edu.51cto.com/" target="_blank">学院</a>
+            <a href="https://e.51cto.com/" target="_blank">微职位</a>
+            <a href="http://aix.51cto.com/activity/index.html" target="_blank" class="nav_dk">大咖来了</a>
+            <a href="https://blog.51cto.com/" target="_blank">博客</a>
+            
+            <a href="https://home.51cto.com/" target="_blank">家园</a>
+            <a href="http://bbs.51cto.com/" target="_blank">论坛</a>
+            <a href="https://harmonyos.51cto.com/?blogdaohang" target="_blank">鸿蒙社区</a>
+            <a href="http://x.51cto.com/" target="_blank">CTO训练营</a>
+            <!--a href=" http://club.51cto.com?blog" target="_blank">CTO俱乐部</a-->
+            <a href="http://wot.51cto.com/" target="_blank">WOT</a>
+            <a href="http://www.51cto.com/" target="_blank">51CTO</a>
+            <i class="arrow"></i>
+        </div>
+      </li>
+              <li>
+			    <!-- <a href="/site/login?reback=https%3A%2F%2Fblog.51cto.com%2F9552815%2F2123352&logintype=reg" target="_self">登录/注册</a> -->
+			    <a href="https://home.51cto.com/index?reback=https://blog.51cto.com/9552815/2123352" target="_self">登录<span style="font-family: none;">/</span>注册</a>
+          <!--领VIP图标-->
+          <span style="position: absolute;top:0px">
+            <a href="https://edu.51cto.com/center/activity/member-activity" target="_blank">
+              <img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/50768f7d453813db433782e76c9f1d44.png">
+            </a>
+          </span>
+        </li>
+        <!-- <li class="login"><a href="/site/login?reback=https%3A%2F%2Fblog.51cto.com%2F9552815%2F2123352" target="_self">登录/</a></li> -->
+                
+        <li class="mRead">
+            <a href="javascript:;" rel="nofollow">手机阅读</a>
+            <div style="left:-68%" class="clearfix">
+                <i class="arrow"></i>
+                <div class="towD-box fl">
+                    <img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/blog_qr.png">
+                    <p>手机随时阅读</p>
+                </div>
+                <div class="towD-box fr">
+                    <img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/5a45016915218bb53e32af17b14a8822.jpg">
+                    <p class="twoD-red">新人专享大礼包￥24</p>
+                </div>
+            </div>
+        </li>
+
+            <li class="search"><a href="https://blog.51cto.com/search/index" target="_self" rel="nofollow">搜索</a></li>
+                  <li class="write"><a href="javascript:;" onclick="Login()" rel="nofollow">写文章</a></li>
+                  </ul>
+
+          <div class="clear"></div>
+  </div>
+</div>
+<script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/box.js"></script> 
+<script>
+    var isLogin = '0';
+    var userId = '';
+    var imgpath = 'https://s4.51cto.com/';
+    var BLOG_URL = 'https://blog.51cto.com/';
+    var msg_num_url = '/index/ajax-msg-num';
+    $('.msg-follow, .msg-follow-max').eq(1).css({top: '91px'});
+    $('.msg-follow, .msg-follow-max').eq(2).css({top: '121px'});
+    setTimeout(function(){
+            $.ajax({
+                url:msg_num_url,
+                type:"get",
+                dataType:'json',
+                success:function(res){
+                    if(res.status == '0'){
+                       //
+                       var hasNewMsg = false;
+                       if(res.data.msgNum > 0 && !$('#myMsg i').hasClass('dot')){
+                            $('#myMsg i').addClass('dot');
+                            hasNewMsg = true;
+                       }
+                       if(res.data.notifyNum > 0 && !$('#myNotify i').hasClass('dot')){
+                           $('#myNotify i').addClass('dot');
+                           hasNewMsg = true;
+                       }
+                       if(res.data.recommend_new > 0 && !$('#myRecommend i').hasClass('dot')){
+                           $('#myRecommend i').addClass('dot');
+                           hasNewMsg = true;
+                       }
+                       if(hasNewMsg && !$('#myAllMsg i').hasClass('dot')){
+                           $('#myAllMsg i').addClass('dot');
+                       }
+                    }
+
+                }
+            });
+    },70);
+    //广告图
+$(function(){
+     new AutoAD({
+      ADD:$('<a href="https://edu.51cto.com/broadcast/71#pc" class="closeMB" target="_blank" styel="display:block;"><img src="https://s4.51cto.com/images/blog/202101/22/78545f8aa3208d2905655ef579b24330.jpg"></a><a class="closeMB" style="position: absolute;right:2px;top: 3px;width: 50px;height: 40px;cursor: pointer;" href="javascript:;"></a>'),
+      W:500,
+      H:400,
+      cookie:'blog_activity_blog203',
+      mask:"#000",
+      ts:'21600',
+      noCBtn: true
+    }) 
+})    
+</script>
+ <script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/entrance.js" id="zhichiScript" class="zhiCustomBtn" data-args="manual=true"></script>
+<a href="javascript:;" class="zhiCustomBtn" style="position: fixed;z-index: 2147483583;width: 60px;height: 6px;text-align: center;bottom:275px;right:0px;">
+<span class="service-btn">在线<br>客服</span>
+</a>
+
+<script type="text/javascript">
+var zhiManager = (getzhiSDKInstance());
+zhiManager.on("load", function() {
+    zhiManager.initBtnDOM();
+});
+//zhiManager.set('title','垃圾/广告信息举报');
+zhiManager.set('powered',false);
+zhiManager.set('color', '4285f4');
+zhiManager.set('customBtn', 'true');
+zhiManager.set('moduleType',2);
+zhiManager.set('size',{'width':360,'height':500});
+
+zhiManager.set('userinfo', {partnerId:'',uname:'',params:'{"用户名":""}'});
+zhiManager.set('customMargin', 20);
+zhiManager.set('horizontal', 20);
+zhiManager.set('vertical', 90);
+zhiManager.set('preVisitArgs',{'preVisitUrl': document.referrer?document.referrer:''});
+zhiManager.set('curVisitArgs',{'curVisitUrl': location.href,curVisitTitle:document.title,});
+</script>
+<div class="Content-box" style="min-height: 642px;">
+    	<link rel="stylesheet" href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/mdeShow.css">
+<link rel="stylesheet" href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/tinyscrollbar.css">
+<script type="text/javascript" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/jquery.js"></script>
+<link rel="stylesheet" href="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/details.css">
+<div class="Content Index detail-content" style="padding-bottom: 50px;">
+	<section class="page-content-left">
+		<!-- 用户介绍 -->
+		<div class="user-intr">
+			<div class="user-content">
+				<div class="top">
+					<div class="avatar">
+						<div class="avatar-img">
+							<a href="https://blog.51cto.com/9552815" target="_blank">
+								<img class="is-vip-img is-vip-img-4" data-uid="9542815" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/wKioL1mG81Dw-U9EAAAwMN-ZfIw947_middle.jpg">
+							</a>
+							<!-- class: 博客之星：bkzx， 推荐之星： tjzx, 专家： zj, 讲师： js -->
+							
+						</div>
+					</div>
+					<div class="username">
+						<a href="https://blog.51cto.com/9552815" target="_blank"><span class="blog-user" title="zzzzzga" style="max-width: 254px;">zzzzzga</span></a> 
+						<div class="icon">   
+							<ul class="detail-list">
+																																								<div class="clear"></div>
+							</ul>
+						</div>
+					</div>
+					<div class="operating">
+						<button class="sx"><a class="" href="https://home.51cto.com/space?uid=9542815" target="_blank" rel="nofollow">私信</a></button>
+											</div>
+				</div>
+				<div class="bottom">
+					<div class="num-name num-top">
+						<ul class="first-num">
+							<li>
+								<div class="num">19</div>
+								<div class="label-name"><a href="https://blog.51cto.com/9552815?s=4" target="_blank">原创 &gt;</a></div>
+							</li>
+							<li>
+								<div class="num">0</div>
+								<div class="label-name"><a href="https://blog.51cto.com/9552815?s=6" target="_blank">翻译 &gt;</a></div>
+							</li>
+							<li>
+								<div class="num">5</div>
+								<div class="label-name"><a href="https://blog.51cto.com/9552815?s=5" target="_blank">转载 &gt;</a></div>
+							</li>
+							<li>
+								<div class="num">1</div>
+								<div class="label-name">评论</div>
+							</li>
+							<div class="clear"></div>
+						</ul>
+					</div>
+					<div class="num-name num-bottom">
+						<ul>
+							<li>
+								<div class="num">18W+</div>
+								<div class="label-name">人气</div>
+							</li>
+							<li>
+								<div class="num">0</div>
+								<div class="label-name"><a href="https://blog.51cto.com/9552815?type=3" target="_blank">粉丝 &gt;</a></div>
+							</li>
+							<li>
+								<div class="num">0</div>
+								<div class="label-name"><a href="https://blog.51cto.com/9552815?type=2" target="_blank">关注 &gt;</a></div>
+							</li>
+							<li>
+								<div class="num">1</div>
+								<div class="label-name">收藏</div>
+							</li>
+							<div class="clear"></div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 自定义最新文章 -->
+				<div class="lbt self-latest-articles">
+			<dl>
+				<dt>
+					<div class="ft"><span class="type-name"></span><span class="type-name">最新文章</span></div>
+				</dt>
+								<dd><div class="line-1 lt"><a href="https://blog.51cto.com/9552815/2174489" target="_blank" title="oauth2.0理解">oauth2.0理解</a></div></dd>
+								<dd><div class="line-1 lt"><a href="https://blog.51cto.com/9552815/2173522" target="_blank" title="windows下node多版本管理NVM安装">windows下node多版本管理NVM安装</a></div></dd>
+								<dd><div class="line-1 lt"><a href="https://blog.51cto.com/9552815/2169053" target="_blank" title="git版本管理规范">git版本管理规范</a></div></dd>
+								<dd><div class="line-1 lt"><a href="https://blog.51cto.com/9552815/2132013" target="_blank" title="centos7安装mysql">centos7安装mysql</a></div></dd>
+								<dd><div class="line-1 lt"><a href="https://blog.51cto.com/9552815/2123435" target="_blank" title="区块链入门">区块链入门</a></div></dd>
+							</dl>
+		</div>
+				<!-- 热门文章 -->
+				<!-- 热评好文 -->
+				<!-- 最新评论 -->
+				<div class="lbt latest-comment">
+			<dl>
+				<dt>
+					<div class="line-1 ft">最新评论</div>
+				</dt>
+								<dd>
+					<div class="line-1 lt"><a href="https://blog.51cto.com/9552815/2122392" target="_blank" title="浏览器挖矿——XMR门罗币">浏览器挖矿——XMR门罗币</a></div>
+					<div class="line-1 desc" title="qq5b58452ccb984：现在挖门罗，都去使用哈鱼矿工了"><a href="https://blog.51cto.com/13887431" target="_blank">qq5b58452ccb984</a>：现在挖门罗，都去使用哈鱼矿工了</div>
+				</dd>
+								
+			</dl>
+		</div>
+				<!-- 最近文章 -->
+				<!-- 目录 -->
+		<div class="lbt table-contents">
+			<dl>
+				<dt>
+					<div class="line-1 ft">目录</div>
+				</dt>
+				<dd>
+					<div class="Blog-Right artical-Right">
+					<div class="directoryBox"><span class="top-icon"></span><div class="list directory"><ul class="directory-list"><li class="lv3"><a href="https://blog.51cto.com/9552815/2123352#h0">ubuntu18.04安装xfce+vnc</a></li><div class="arrow"></div></ul></div><span class="bot-icon"></span></div></div>
+					<div class="clear"></div>
+				</dd>
+			</dl>
+		</div>
+	</section>
+	<section class="page-content-right">
+		<div class="Page M764">
+			<!-- left start -->
+			<div class="artical-Left-blog">
+				<div class="status">
+										<a href="https://blog.51cto.com/9552815?s=4" class="tab_name original" target="_blank">原创</a>
+									</div>
+				<h1 class="artical-title">ubuntu18.04安装xfce+vnc</h1>
+				<div class="artical-title-list">
+					<div class="is-vip-bg-6 fl">
+						<a href="https://blog.51cto.com/9552815" class="a-img" target="_blank"><img class="is-vip-img is-vip-img-4" data-uid="9542815" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/wKioL1mG81Dw-U9EAAAwMN-ZfIw947_middle.jpg"></a>
+					</div>
+					<a href="https://blog.51cto.com/9552815" class="name fl" target="_blank" style="margin-right:0;">zzzzzga</a>
+															<a class="comment comment-num fr"><font class="comment_number">0</font>人评论</a>
+					<span class="fr"></span>
+					<a href="javascript:;" class="read fr">32140人阅读</a>
+					<a href="javascript:;" class="time fr">2018-06-02 01:20:13</a>
+					<div class="clear"></div>
+				</div>
+				
+									
+					<div class="artical-content-bak main-content">
+												<div class="con artical-content editor-preview-side"><h3 id="h0">ubuntu18.04安装xfce+vnc</h3>
+<p>主要参考：<a href="https://blog.csdn.net/m0_37041325/article/details/80516041" rel="nofollow" style="color: rgb(66, 133, 244);">ubuntu16.04安装VNC+xfce 的方法</a><br>我这里自己做个笔记<br>他写的很好，我很快就安装成功了。</p>
+<h4>安装xfce</h4>
+<pre><code class="hljs cs">sudo apt-<span class="hljs-keyword">get</span> install xfce4  </code></pre>
+<h4>安装VNCServer</h4>
+<pre><code class="hljs cs">sudo apt-<span class="hljs-keyword">get</span> install vnc4server </code></pre>
+<h4>设置密码并运行vncserver</h4>
+<pre><code class="hljs nginx"><span class="hljs-attribute">vncserver</span>  </code></pre>
+<h4>配置xstartup文件</h4>
+<p>修改xstartup文件内容，针对Xfce4桌面环境.<br>修改~/.vnc/xstartup中的内容为：</p>
+<pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh  </span>
+<span class="hljs-built_in">unset</span> SESSION_MANAGER  
+<span class="hljs-built_in">unset</span> DBUS_SESSION_BUS_ADDRESS  
+startxfce4 &amp;  
+
+[ -x /etc/vnc/xstartup ] &amp;&amp; <span class="hljs-built_in">exec</span> /etc/vnc/xstartup  
+[ -r <span class="hljs-variable">$HOME</span>/.Xresources ] &amp;&amp; xrdb <span class="hljs-variable">$HOME</span>/.Xresources  
+xsetroot -solid grey  </code></pre>
+<h4>重启vncserver</h4>
+<p>修改配置文件后，运行如下命令结束掉之前产生的窗口:1</p>
+<pre><code class="hljs css"><span class="hljs-selector-tag">vncserver</span> <span class="hljs-selector-tag">-kill</span> <span class="hljs-selector-pseudo">:1</span>  </code></pre>
+<p>重新启动</p>
+<pre><code class="hljs">vncserver</code></pre>
+<h4>成功</h4>
+<p><img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/838a4e1d67b20efac0ba84f496318a43.png" alt="ubuntu18.04安装xfce+vnc" style="cursor: pointer;"></p></div>
+					</div>
+																	<div class="artical-copyright mt26">©著作权归作者所有：来自51CTO博客作者zzzzzga的原创作品，如需转载，请注明出处，否则将追究法律责任</div>
+												<div class="for-tag mt26">
+																										<a href="https://blog.51cto.com/search/result?q=ubuntu18.04" target="_blank">ubuntu18.04</a>
+																												<a href="https://blog.51cto.com/search/result?q=xfce" target="_blank">xfce</a>
+																												<a href="https://blog.51cto.com/search/result?q=vnc" target="_blank">vnc</a>
+																												<div class="clear"></div>
+				</div>
+				<div class="more-list">
+					<p class="is-praise fl "><span type="1" blog_id="2123352" userid="9542815">0</span></p>
+					<div class="share-box fr">
+						<p class="share"><i></i>分享</p>
+						<div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1611330193781">
+						<span></span>
+						<a class="bds_tsina" data-cmd="tsina" title="分享到新浪微博">微博</a>
+						<a class="bds_sqq" data-cmd="sqq" title="分享到QQ好友">QQ</a>
+						<a class="bds_weixin" data-cmd="weixin" title="分享到微信">微信</a>
+						<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/qr-url.png">
+						</div>
+					</div>
+					<p class="favorites favorites-opt fr"><i></i>收藏</p>
+										<div class="clear"></div>
+				</div>
+									<div class="artical-list">
+											<a class="fl" href="https://blog.51cto.com/9552815/2122646" title="centos6.9源码安装wine3.0稳定版">
+							上一篇：centos6.9源码安装win...</a>
+																<a class="fr" href="https://blog.51cto.com/9552815/2123435" title="区块链入门">
+							下一篇：区块链入门</a>
+											<div class="clear"></div>
+					</div>
+								
+			</div>
+			<div class="artical-Left" id="comment">
+				<div class="author-module">
+					<div class="is-vip-bg-6 fl">
+						<a href="https://blog.51cto.com/9552815" class="a-img" target="_blank">
+							<img class="is-vip-img is-vip-img-4" data-uid="9542815" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/wKioL1mG81Dw-U9EAAAwMN-ZfIw947_middle.jpg">
+						</a>
+					</div>
+					<div class="author-module-center fl">
+						<a class="h2" href="https://blog.51cto.com/9552815" target="_blank" style="display:inline-block;">zzzzzga</a>
+												<h3>24篇文章，18W+人气，0粉丝</h3>
+											</div>
+										<div class="clear"></div>
+				</div>
+				<!-- 发布评论 -->
+				<div class="comment-creat">
+					<div class="is-vip-bg-6 fl">
+						<a href="https://blog.51cto.com/9552815" class="header-img" target="_blank">
+							<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/noavatar_middle.gif">
+						</a>
+					</div>
+					<div class="first-publish publish_user_id fr">
+						<textarea class="textareadiv textareadiv-publish" name="" id="" placeholder="提问和评论都可以，用心的回复会被更多人看到和认可" maxlength="500"></textarea>
+						<div class="comment-push">
+							<p class="msg fl">Ctrl+Enter&nbsp;发布</p>
+															<p class="publish-btn blue-btn fr" flag="1">发布</p>
+														<p class="cancel-btn cancel-btn-1 fr">取消</p>
+							<div class="clear"></div>
+						</div>
+						<input type="hidden" class="user_id" value="9542815">
+						<input type="hidden" class="reply_id" value="2123352">
+						<input type="hidden" class="first_pid" value="">
+					</div>
+					<div class="clear"></div>
+				</div>
+				
+								<div class="commentList" id="comment_mao"></div>
+				<!-- page -->
+				<div class="act_pageList_box"></div>
+			</div>
+			<!-- 功能栏 -->
+			<div class="function-bar bar1 fix-function">
+				<div class="the-lowest Page M764">
+					<p class="is-praise fl "><span type="1" blog_id="2123352" userid="9542815"></span></p>
+					<p class="not-pra b-favorites favorites-opt fl"><i></i><b>0</b></p>
+					<a class="not-pra b-reply fl"><i></i><font class="comment_number"></font></a>
+					<div class="not-pra b-share fl ">
+						<i></i>分享
+						<div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1611330193781">
+						<a class="bds_tsina p2" data-cmd="tsina" title="分享到新浪微博"></a>
+						<a class="bds_sqq p3" data-cmd="sqq" title="分享到QQ好友"></a>
+						<a class="bds_weixin p1" data-cmd="weixin" title="分享到微信"><em class="code-icon"></em><img class="code-img" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/qr-url.png"></a>
+						</div>
+					</div>
+															<a href="https://blog.51cto.com/9552815" class="b-name fr">zzzzzga</a>
+					<div class="is-vip-bg-6 fr">
+						<a href="https://blog.51cto.com/9552815" class="b-img"><img class="is-vip-img is-vip-img-4" data-uid="9542815" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/wKioL1mG81Dw-U9EAAAwMN-ZfIw947_middle.jpg"></a>
+					</div>
+					
+					<div class="clear"></div>
+				</div>
+			</div>
+			<!-- 相关文章 -->
+					    <div class="r-related-articles">
+				<div class="detail">
+					<dl>
+						<dt>相关文章</dt>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/9552815/2174489" target="_blank" data-query-click="dra">oauth2.0理解</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/9552815/2173522" target="_blank" data-query-click="dra">windows下node多版本管理NVM安装</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/wuweijava/2600444" target="_blank" data-query-click="drh">rsync和sersync实时同步文件</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/15070915/2598411" target="_blank" data-query-click="drh">centos临时ip和永久ip的配置</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/14034751/2597734" target="_blank" data-query-click="drh">Kubernetes中的亲和性与反亲和性</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/livestreaming/2597615" target="_blank" data-query-click="drh">监控流媒体服务器连接监控摄像头的配置方式 - GB28181和ONVIF</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/zaa47/2596875" target="_blank" data-query-click="drh">ESXi GPU 直通</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/13440764/2596731" target="_blank" data-query-click="drh">Linux基础-14day-Linux系统服务管理</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/slapping/2596719" target="_blank" data-query-click="drh">redis 6.0源码安装</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/13906754/2595626" target="_blank" data-query-click="drh">linux系统中重启网卡后网络不通（NetworkManager篇）</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/15070904/2595405" target="_blank" data-query-click="drh">vtp实验</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/keep11/2594518" target="_blank" data-query-click="drh">kubernets 挂载 NAS 报 access denied</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/15070904/2593449" target="_blank" data-query-click="drh">vtp基本命令</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/keep11/2590358" target="_blank" data-query-click="drh">jenkins 集成 gitlab 拉取代码</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/breaklinux/2589944" target="_blank" data-query-click="drh">Python 搞定windows server 2008 用户授权远程登录</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/1648324/2588772" target="_blank" data-query-click="drh">SaltStack api使用</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/3241766/2587432" target="_blank" data-query-click="drh">shell脚本专题(01)：探秘脚本首行</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/14900374/2587042" target="_blank" data-query-click="drh">git pull报错: ssh_exchange_identification</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/14306024/2586647" target="_blank" data-query-click="drh">LNMP架构搭建部署</a></dd>
+													<dd><a class="about-aticle white-space" href="https://blog.51cto.com/14143894/2586579" target="_blank" data-query-click="drh">在Kubernetes中为Node.js应用程序创建活动性探针</a></dd>
+											</dl>
+				</div>
+			</div>
+						
+			<!-- end right  -->
+		</div>
+					<div class="special-column">
+				<div class="Page M764">
+											<div class="column-1">
+							<h2 class="column-tit">推荐专栏<a href="https://blog.51cto.com/cloumn/index?utm_source=p" target="_blank"><span class="recommend-more-span" style=""><i class="icon-add"></i>更多</span></a></h2>
+															<div class="column-box recommend-cloumn">
+									<a href="https://blog.51cto.com/cloumn/detail/5" class="a-img fl cloumn-tab-par" target="_blank">
+										<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/dc6736c5fd50474b5df8b76b040e3d03.jpg">
+																			</a>
+									<div class="center fl">
+										<a class="h2 white-space left-list" href="https://blog.51cto.com/cloumn/detail/5" target="_blank"> 带你玩转高可用</a>
+										<h3 class="white-space">前百度高级工程师的架构高可用实战</h3>
+										<h4 class="white-space">共15章&nbsp;|&nbsp;<a href="https://blog.51cto.com/13527416" target="_blank">曹林华</a></h4>
+										<h5><span class="price">
+										￥51.00
+										</span><span style="font-size:12px;font-weight:normal;">523人订阅</span></h5>
+									</div>
+									<div class="right fr recommend-cloumn-right">
+																																			<a class="cloumn-subscribe left-list" cid="5" href="https://blog.51cto.com/cloumn/detail/5" ask="1" target="_blank">订&nbsp;&nbsp;&nbsp;阅</a>
+																															</div>
+									<div class="clear"></div>
+								</div>
+															<div class="column-box recommend-cloumn">
+									<a href="https://blog.51cto.com/cloumn/detail/6" class="a-img fl cloumn-tab-par" target="_blank">
+										<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/629650e188ddde78b213e564c2e9ebff.jpg">
+																			</a>
+									<div class="center fl">
+										<a class="h2 white-space left-list" href="https://blog.51cto.com/cloumn/detail/6" target="_blank"> 负载均衡高手炼成记</a>
+										<h3 class="white-space">高并发架构之路</h3>
+										<h4 class="white-space">共15章&nbsp;|&nbsp;<a href="https://blog.51cto.com/sery" target="_blank">sery</a></h4>
+										<h5><span class="price">
+										￥51.00
+										</span><span style="font-size:12px;font-weight:normal;">603人订阅</span></h5>
+									</div>
+									<div class="right fr recommend-cloumn-right">
+																																			<a class="cloumn-subscribe left-list" cid="6" href="https://blog.51cto.com/cloumn/detail/6" ask="1" target="_blank">订&nbsp;&nbsp;&nbsp;阅</a>
+																															</div>
+									<div class="clear"></div>
+								</div>
+															<div class="column-box recommend-cloumn">
+									<a href="https://blog.51cto.com/cloumn/detail/13" class="a-img fl cloumn-tab-par" target="_blank">
+										<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/a940c66317ecbe58436a2ad3831c2d7d.png">
+																			</a>
+									<div class="center fl">
+										<a class="h2 white-space left-list" href="https://blog.51cto.com/cloumn/detail/13" target="_blank"> 基于Python的DevOps实战</a>
+										<h3 class="white-space">自动化运维开发新概念</h3>
+										<h4 class="white-space">共20章&nbsp;|&nbsp;<a href="https://blog.51cto.com/yuhongchun" target="_blank">抚琴煮酒</a></h4>
+										<h5><span class="price">
+										￥51.00
+										</span><span style="font-size:12px;font-weight:normal;">574人订阅</span></h5>
+									</div>
+									<div class="right fr recommend-cloumn-right">
+																																			<a class="cloumn-subscribe left-list" cid="13" href="https://blog.51cto.com/cloumn/detail/13" ask="1" target="_blank">订&nbsp;&nbsp;&nbsp;阅</a>
+																															</div>
+									<div class="clear"></div>
+								</div>
+															<div class="column-box recommend-cloumn">
+									<a href="https://blog.51cto.com/cloumn/detail/18" class="a-img fl cloumn-tab-par" target="_blank">
+										<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/45862f289339dc922ffda669fd74ad9b.jpg">
+																			</a>
+									<div class="center fl">
+										<a class="h2 white-space left-list" href="https://blog.51cto.com/cloumn/detail/18" target="_blank"> 网工2.0晋级攻略 ——零基础入门Python/Ansible</a>
+										<h3 class="white-space">网络工程师2.0进阶指南</h3>
+										<h4 class="white-space">共30章&nbsp;|&nbsp;<a href="https://blog.51cto.com/gingerbeer" target="_blank">姜汁啤酒</a></h4>
+										<h5><span class="price">
+										￥51.00
+										</span><span style="font-size:12px;font-weight:normal;">2055人订阅</span></h5>
+									</div>
+									<div class="right fr recommend-cloumn-right">
+																																			<a class="cloumn-subscribe left-list" cid="18" href="https://blog.51cto.com/cloumn/detail/18" ask="1" target="_blank">订&nbsp;&nbsp;&nbsp;阅</a>
+																															</div>
+									<div class="clear"></div>
+								</div>
+															<div class="column-box recommend-cloumn">
+									<a href="https://blog.51cto.com/cloumn/detail/30" class="a-img fl cloumn-tab-par" target="_blank">
+										<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/5353379fc95da1d7d34fd243b9ace17f.jpg">
+																			</a>
+									<div class="center fl">
+										<a class="h2 white-space left-list" href="https://blog.51cto.com/cloumn/detail/30" target="_blank"> 全局视角看大型园区网</a>
+										<h3 class="white-space">路由交换+安全+无线+优化+运维</h3>
+										<h4 class="white-space">共40章&nbsp;|&nbsp;<a href="https://blog.51cto.com/weilan2222" target="_blank">51CTOsummer</a></h4>
+										<h5><span class="price">
+										￥51.00
+										</span><span style="font-size:12px;font-weight:normal;">2608人订阅</span></h5>
+									</div>
+									<div class="right fr recommend-cloumn-right">
+																																			<a class="cloumn-subscribe left-list" cid="30" href="https://blog.51cto.com/cloumn/detail/30" ask="1" target="_blank">订&nbsp;&nbsp;&nbsp;阅</a>
+																															</div>
+									<div class="clear"></div>
+								</div>
+													</div>
+										<!-- 0630 好课推荐 -->
+										<!-- //0630 好课推荐 -->
+				</div>
+			</div>
+				<div class="group_img_box" style="position: fixed; top: 40%; right: 20px;">
+			<div class="group_git_box">
+							<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/f84902630cd49eab16f7895cd73e3092.png" style="width:50px;height:50px;"> 	
+				<!--<img src="https://s4.51cto.com/images/blog/201810/22/078772c84eb23213ea90f577d9316ce4.png"/>-->
+						</div>
+				<div class="group_code_box">
+				<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/left-qr.jpg" width="130" height="130">
+				<p>扫一扫,领取大礼包</p>
+			</div>
+			
+			<div><!--学院领VIP-->
+				<a href="https://edu.51cto.com/center/activity/member-activity?qd=bokexiaotu" target="_blank">
+					<img src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/f0b9c87765babdf27462fb0b759a2e89.gif" style="width:55px;margin-top: 10px; margin-left: 5px;">
+				</a>
+			</div>
+			<div>
+				<a class="scrollTop" href="javascript:void(0);" onclick="$(window).scrollTop(0);"></a>
+			</div>
+		</div>
+		
+	</section>
+	<div class="clear"></div>
+</div>
+<div class="footer">Copyright © 2005-2020 51CTO.COM 版权所有 京ICP证060544号</div>
+<!-- 老博文美观处理 -->
+<script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/countDown.js"></script>
+<script>
+	var tipStatus = '1'
+	if( tipStatus == '1') {
+		$('#zanTip').show()
+	} else {
+		$('#zanTip').hide()
+	}
+	var totalWidth = $('.detail-list').outerWidth(true)+$('.dbk').outerWidth(true)
+	var usernameWidth = $('.username').outerWidth(true)
+	var cha = usernameWidth-totalWidth-10+'px'
+	$('.blog-user').css('max-width', cha)
+	var praise_url = 'https://blog.51cto.com/praise/praise'
+    	addReply_url = 'https://blog.51cto.com/comments/add'
+    	removeUrl = 'https://blog.51cto.com/comments/del'
+    	blog_id = '2123352'
+    	pv_log_info = {
+            'pv_type':'blog',
+            'user_id':'9542815',
+            'blog_id':'2123352'
+        };
+    	rid = '0'
+    	is_comment = '0'
+    	comment_list = '/blog/ajax-comment-list'
+    	comment_sort = "asc"
+    	index_url = 'https://blog.51cto.com/9552815';
+    	uc_url = 'https://ucenter.51cto.com/'
+    	blog_url = 'https://blog.51cto.com/'
+    	img_url = 'https://static1.51cto.com/edu/blog/'
+    	i_user_id = ''
+    	c_user_id ='9542815'
+    	collect_url = 'https://blog.51cto.com/collect/add'
+    	is_old = '0'
+    	nicknameurl = 'https://blog.51cto.com/9552815'
+    	nickname = 'zzzzzga'
+    	myself = window.location.href;
+	$('.you-like-list li:odd').css({'margin-left': '10%'});
+	$('.column-box a:odd').addClass('left-list')
+	$('.myUrl').text(myself).click(function(){window.open(myself)})
+	setTimeout(function(){$('.Footer').css({'margin-top':'-50px'})},50)
+        	if(is_old==1){
+    // SyntaxHighlighter.all();
+        insertCodeElement("### ubuntu18.04\u5b89\u88c5xfce+vnc\n\u4e3b\u8981\u53c2\u8003\uff1a[ubuntu16.04\u5b89\u88c5VNC+xfce \u7684\u65b9\u6cd5](https:\/\/blog.csdn.net\/m0_37041325\/article\/details\/80516041)\n\u6211\u8fd9\u91cc\u81ea\u5df1\u505a\u4e2a\u7b14\u8bb0\n\u4ed6\u5199\u7684\u5f88\u597d\uff0c\u6211\u5f88\u5feb\u5c31\u5b89\u88c5\u6210\u529f\u4e86\u3002\n\n#### \u5b89\u88c5xfce\n```\nsudo apt-get install xfce4  \n```\n\n#### \u5b89\u88c5VNCServer\n```\nsudo apt-get install vnc4server \n```\n\n#### \u8bbe\u7f6e\u5bc6\u7801\u5e76\u8fd0\u884cvncserver\n```\nvncserver  \n```\n\n#### \u914d\u7f6exstartup\u6587\u4ef6\n\u4fee\u6539xstartup\u6587\u4ef6\u5185\u5bb9\uff0c\u9488\u5bf9Xfce4\u684c\u9762\u73af\u5883.\n\u4fee\u6539~\/.vnc\/xstartup\u4e2d\u7684\u5185\u5bb9\u4e3a\uff1a\n```\n#!\/bin\/sh  \nunset SESSION_MANAGER  \nunset DBUS_SESSION_BUS_ADDRESS  \nstartxfce4 &  \n  \n[ -x \/etc\/vnc\/xstartup ] && exec \/etc\/vnc\/xstartup  \n[ -r $HOME\/.Xresources ] && xrdb $HOME\/.Xresources  \nxsetroot -solid grey  \n```\n\n#### \u91cd\u542fvncserver\n\u4fee\u6539\u914d\u7f6e\u6587\u4ef6\u540e\uff0c\u8fd0\u884c\u5982\u4e0b\u547d\u4ee4\u7ed3\u675f\u6389\u4e4b\u524d\u4ea7\u751f\u7684\u7a97\u53e3:1\n```\nvncserver -kill :1  \n```\n\u91cd\u65b0\u542f\u52a8\n```\nvncserver\n```\n#### \u6210\u529f\n![](https:\/\/s4.51cto.com\/images\/blog\/201806\/02\/838a4e1d67b20efac0ba84f496318a43.png?x-oss-process=image\/watermark,size_16,text_QDUxQ1RP5Y2a5a6i,color_FFFFFF,t_100,g_se,x_10,y_10,shadow_90,type_ZmFuZ3poZW5naGVpdGk=)", '#result');
+  }
+
+  function insertCodeElement(content, container){
+    container = container || document;
+    // 创建一个 div 来放置获取到的内容，这样就可以把 content 字符串内容转换成 dom
+    // 方便我们对这个 dom 进行操作（只是创建 div，并没有插入到文档，他只存在于内存中）
+    var parent = document.createElement('div');
+    parent.innerHTML = content;
+
+    // 找到 parent 中的所有 pre 标签，并遍历
+    var $pres = $(parent).find('pre');
+    $pres.each(function(index, el) {
+      var $el = $(el),
+          html = $el.html(),
+          code = document.createElement('code'),
+          elClass = $el.attr('class');
+      if(!elClass) {return};
+          // 获取 pre 标签中，class 属性中包含的本段代码所有的编程语言
+      var language = elClass.substring(6, elClass.indexOf(';'));
+
+      code.className = 'language-' + language;
+      code.innerHTML = html;
+
+      $el.html(code);
+    });
+
+    $(container).html(parent.innerHTML);
+
+    // 最后，调用 Prism 的方法来高亮代码
+    Prism.highlightAll();
+  }
+	window._bd_share_config={
+    "common":{
+      "bdText":"ubuntu18.04安装xfce+vnc",
+      "bdDesc":$("#abstract_bdshare").text(),
+      "bdMini":"2",
+      "bdMiniList":false,
+      "bdPic":"https://s4.51cto.com/images/201710/25/bd540a4f14d822f6e69087758699358b.jpg",
+      "bdStyle":"0",
+      "bdSize":"16"
+    },
+    "share":{}
+  };
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+  setTimeout(function(){
+  	$('.bdsharebuttonbox a').removeAttr('title')
+  },1000);
+
+	var now_time = 1611330192; //当前时间
+  setInterval(function(){now_time+=0.01},10);
+
+  // 初始化页面
+  updatePage();
+  // 页面tab切换
+  zDate.visibilityAction(function () {
+    zDate.getServerTime(function (e) {
+      var updateResult = new Date(e).getTime();
+      now_time = +updateResult.toString().substr(0, 10);
+      updatePage();
+    });
+   })
+  // 定时刷新现在时间
+  setInterval(function () {
+    zDate.getServerTime(function (e) {
+      var updateResult = new Date(e).getTime();
+      now_time = +updateResult.toString().substr(0, 10);
+      updatePage();
+    });
+  }, 1000*60*2);
+  // 页面刷新
+  function updatePage() {
+    $('.presell').each(function(index, item) {
+      var end_time = $(this).data('end'); // 结束时间
+      if (!end_time) {
+        return;
+      }
+      var me = $(this);
+      if (me.lastTime) {
+        clearInterval(me.lastTime);
+        me.lastTime = null;
+      } else {
+        me.lastTime = setInterval(function() {
+          zDate.setLastTimePc(me.find('.timespan'), (end_time*1000-now_time*1000), me.lastTime, function() {
+						me.parents('.right').find('.cloumn-subscribe').removeClass('presell-color');
+						me.remove();
+						$('.pre-tips').remove();
+					});
+        }, 10);
+      }
+    });
+  }
+		//二维码显示
+		$(".group_git_box").hover(function(){
+			$(this).parents('.group_img_box').find(".group_code_box").show()
+		},function(){
+			$(this).parents('.group_img_box').find(".group_code_box").hide()
+		})
+
+	// 点击相关文章
+	$('.about-aticle').on('click', function(e) {
+		e.preventDefault();
+		var href = $(this).attr('href')
+		var source = $(this).attr('data-query-click')
+		var hrefSource = href + '?source=' + source
+		window.open(hrefSource)
+	})
+</script>
+</div>
+<script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/marked.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/highlight.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/detail_mp.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/detail.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/details_new.js"></script><script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/copy.js"></script>    
+<div style="display:none">
+    <iframe scrolling="no" src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/pageview.html" width="0" height="0" frameborder="0"></iframe>
+</div>
+
+<script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/pvlog.js"></script>
+<script>
+  $(".gotop").click(function(){$(window).scrollTop(0)})
+</script>
+
+
+    <script type="text/javascript">
+    //百度统计代码
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?2283d46608159c3b39fc9f1178809c21";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+
+    //自动推送链接
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+
+    <script type="text/javascript">
+      var _vds = _vds || [];
+      window._vds = _vds;
+      (function(){
+        _vds.push(['setAccountId', '8c51975c40edfb67']);
+        (function() {
+          var vds = document.createElement('script');
+          vds.type='text/javascript';
+          vds.async = true;
+          vds.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'assets.growingio.com/vds.js';
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(vds, s);
+        })();
+      })();
+      //document.write(decodeURI("%3Cscript src='https://tongji.51cto.com/frontend/tj.gif' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    
+<script>
+  var uid = '';
+  var BLOG_URL = 'https://blog.51cto.com/';
+</script>
+<script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/jquery_003.js"></script>
+<script src="ubuntu18.04%E5%AE%89%E8%A3%85xfce+vnc-%E7%90%AA%C2%B7%E8%BF%B9-51CTO%E5%8D%9A%E5%AE%A2_files/time-on-page.js" charset="utf-8"></script>
+<script>
+    (function(){
+        var wh=$(window).height(),fh=$('.Footer').outerHeight(true),hh=$('.Header').outerHeight(true)
+        $('.Content-box').css({'min-height': wh-fh-hh})
+    })()
+</script>
+
+
+<div id="zhichiBtnBox" style="position: fixed; z-index: 2147483583; box-shadow: rgba(15, 66, 76, 0.25) 0px 0px 14px 0px; width: 60px; height: 60px; border-radius: 50%; background-color: rgb(66, 133, 244); background-image: url(&quot;//www.sobot.com/chat/frame/imgs/icon.png&quot;); background-repeat: no-repeat; background-position: 18px -58px; right: 40px; bottom: 90px; display: none;"><a hidefocus="" id="zhichiBtn" style="position:relative;text-decoration: none; outline: none; font-family: Microsoft Yahei, Arial, Helvetica; color: #fff; font-size: 16px; display: inline-block; margin: 0; padding: 0; border: none; line-height:43px; float:none;width:100%;height:100%;border-radius:50%;"><span class="zc-advice-icon-btn-title" style="box-shadow: rgba(107, 113, 114, 0.15) 0px 2px 4px 0px; border: 1px solid rgb(235, 239, 240); font-family: Microsoft Yahei, Arial, Helvetica; color: rgb(85, 85, 86); font-size: 13px; margin: 0px; text-align: right; background: rgb(255, 255, 255) none repeat scroll 0% 0%; position: absolute; top: 15px; right: 70px; text-overflow: ellipsis; white-space: nowrap; word-break: normal; display: none; border-radius: 3px; padding: 0px 5px; height: 30px; line-height: 30px;">咨询在线客服</span></a><i style="position:absolute;top:0px;right:0px;padding:1px;line-height:20px;text-align:center;color:#fff;font-weight:bold;height:18px;min-width:18px;background-color:#ed5c5c;border-radius:18px;font-size:12px;display:none;font-style:normal;" id="zhichiCount"></i></div></body></html>
